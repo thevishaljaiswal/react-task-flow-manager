@@ -1,3 +1,4 @@
+
 import { Task } from '../types/task';
 import {
   Card,
@@ -50,17 +51,26 @@ export const TaskList = ({ tasks, onDelete, onEdit, onComplete }: TaskListProps)
   return (
     <div className="space-y-4 w-full max-w-4xl">
       {tasks.map((task) => (
-        <Card key={task.id} className={cn(
-          "relative group hover:shadow-lg transition-shadow",
-          task.completed && "bg-gray-50"
-        )}>
+        <Card 
+          key={task.id} 
+          className={cn(
+            "relative group hover:shadow-lg transition-shadow",
+            task.completed && "bg-green-50 border-green-200" // Changed to green background for completed tasks
+          )}
+        >
           <CardHeader>
             <div className="flex items-center justify-between">
               <div>
-                <CardTitle className={cn(task.completed && "text-gray-500 line-through")}>
+                <CardTitle className={cn(
+                  task.completed && "text-green-600" // Changed text color for completed tasks
+                )}>
                   {task.title}
                 </CardTitle>
-                <CardDescription>{task.description}</CardDescription>
+                <CardDescription className={cn(
+                  task.completed && "text-green-500" // Adjusted description color
+                )}>
+                  {task.description}
+                </CardDescription>
               </div>
               <div className="flex items-center gap-2">
                 <Button
@@ -69,7 +79,7 @@ export const TaskList = ({ tasks, onDelete, onEdit, onComplete }: TaskListProps)
                   onClick={() => onComplete(task.id)}
                   className={cn(
                     "opacity-0 group-hover:opacity-100 transition-opacity",
-                    task.completed && "text-green-600"
+                    task.completed && "text-green-600" // Highlight complete button when task is completed
                   )}
                 >
                   <Check className="h-4 w-4" />
@@ -78,7 +88,10 @@ export const TaskList = ({ tasks, onDelete, onEdit, onComplete }: TaskListProps)
                   variant="ghost"
                   size="icon"
                   onClick={() => onEdit(task)}
-                  className="opacity-0 group-hover:opacity-100 transition-opacity"
+                  className={cn(
+                    "opacity-0 group-hover:opacity-100 transition-opacity",
+                    task.completed && "opacity-50" // Reduce opacity of edit button for completed tasks
+                  )}
                 >
                   <Edit className="h-4 w-4" />
                 </Button>
@@ -86,7 +99,10 @@ export const TaskList = ({ tasks, onDelete, onEdit, onComplete }: TaskListProps)
                   variant="ghost"
                   size="icon"
                   onClick={() => onDelete(task.id)}
-                  className="opacity-0 group-hover:opacity-100 transition-opacity text-destructive"
+                  className={cn(
+                    "opacity-0 group-hover:opacity-100 transition-opacity text-destructive",
+                    task.completed && "opacity-50" // Reduce opacity of delete button for completed tasks
+                  )}
                 >
                   <Trash2 className="h-4 w-4" />
                 </Button>
@@ -95,28 +111,57 @@ export const TaskList = ({ tasks, onDelete, onEdit, onComplete }: TaskListProps)
           </CardHeader>
           <CardContent>
             <div className="flex items-center gap-4">
-              <Badge variant="secondary" className={cn(getPriorityColor(task.priority), "text-white")}>
+              <Badge 
+                variant="secondary" 
+                className={cn(
+                  getPriorityColor(task.priority), 
+                  "text-white",
+                  task.completed && "opacity-50" // Reduce badge opacity for completed tasks
+                )}
+              >
                 {task.priority.charAt(0).toUpperCase() + task.priority.slice(1)}
               </Badge>
-              <Badge variant="secondary" className={cn(getStatusColor(task.status), "text-white")}>
-                {task.status.split('_').map(word => 
+              <Badge 
+                variant="secondary" 
+                className={cn(
+                  getStatusColor(task.status), 
+                  "text-white",
+                  task.completed && "opacity-50" // Reduce badge opacity for completed tasks
+                )}
+              >
+                {task.completed ? "Completed" : (task.status.split('_').map(word => 
                   word.charAt(0).toUpperCase() + word.slice(1)
-                ).join(' ')}
+                ).join(' '))}
               </Badge>
               {task.category && (
-                <Badge variant="outline">
+                <Badge 
+                  variant="outline"
+                  className={cn(
+                    task.completed && "opacity-50" // Reduce badge opacity for completed tasks
+                  )}
+                >
                   {task.category}
                 </Badge>
               )}
               {task.dueDate && (
-                <div className="flex items-center text-sm text-muted-foreground">
+                <div 
+                  className={cn(
+                    "flex items-center text-sm text-muted-foreground",
+                    task.completed && "opacity-50" // Reduce opacity for completed tasks
+                  )}
+                >
                   <Calendar className="h-4 w-4 mr-1" />
                   {format(task.dueDate, 'PP')}
                 </div>
               )}
             </div>
           </CardContent>
-          <CardFooter className="text-sm text-muted-foreground">
+          <CardFooter 
+            className={cn(
+              "text-sm text-muted-foreground",
+              task.completed && "opacity-50" // Reduce footer opacity for completed tasks
+            )}
+          >
             <div className="flex items-center gap-4 flex-wrap">
               {task.customerName && (
                 <div className="flex items-center gap-1">
