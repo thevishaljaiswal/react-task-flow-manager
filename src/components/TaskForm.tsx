@@ -40,6 +40,9 @@ export const TaskForm = ({ onSubmit, onCancel }: TaskFormProps) => {
   const [priority, setPriority] = useState<Priority>('medium');
   const [status, setStatus] = useState<Status>('todo');
   const [category, setCategory] = useState('');
+  const [customerName, setCustomerName] = useState('');
+  const [projectName, setProjectName] = useState('');
+  const [unitName, setUnitName] = useState('');
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
@@ -50,6 +53,10 @@ export const TaskForm = ({ onSubmit, onCancel }: TaskFormProps) => {
       priority,
       status,
       category,
+      customerName,
+      projectName,
+      unitName,
+      completed: false, // New tasks are not completed by default
     });
   };
 
@@ -138,6 +145,33 @@ export const TaskForm = ({ onSubmit, onCancel }: TaskFormProps) => {
                 placeholder="Category"
                 value={category}
                 onChange={(e) => setCategory(e.target.value)}
+              />
+            </div>
+          </div>
+          
+          {/* Additional fields */}
+          <div className="flex gap-4">
+            <div className="flex-1">
+              <Input
+                placeholder="Customer Name"
+                value={customerName}
+                onChange={(e) => setCustomerName(e.target.value)}
+              />
+            </div>
+          </div>
+          <div className="flex gap-4">
+            <div className="flex-1">
+              <Input
+                placeholder="Project Name"
+                value={projectName}
+                onChange={(e) => setProjectName(e.target.value)}
+              />
+            </div>
+            <div className="flex-1">
+              <Input
+                placeholder="Unit Name"
+                value={unitName}
+                onChange={(e) => setUnitName(e.target.value)}
               />
             </div>
           </div>
