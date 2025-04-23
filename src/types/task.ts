@@ -12,4 +12,8 @@ export interface Task {
   category: string;
   createdAt: Date;
   updatedAt: Date;
+  customerName: string;
+  projectName: string;
+  unitName: string;
+  completed: boolean;
 }

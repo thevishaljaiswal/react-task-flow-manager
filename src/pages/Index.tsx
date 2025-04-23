@@ -1,11 +1,10 @@
-
 import { useState } from 'react';
 import { Task } from '../types/task';
 import { TaskForm } from '../components/TaskForm';
 import { TaskList } from '../components/TaskList';
 import { Button } from "@/components/ui/button";
 import { Plus } from 'lucide-react';
-import { useToast } from "@/components/ui/use-toast";
+import { useToast } from "@/hooks/use-toast";
 
 const Index = () => {
   const [tasks, setTasks] = useState<Task[]>([]);
@@ -37,8 +36,19 @@ const Index = () => {
   };
 
   const handleEditTask = (task: Task) => {
-    // To be implemented in the next iteration
     console.log('Edit task:', task);
+  };
+
+  const handleCompleteTask = (id: string) => {
+    setTasks(tasks.map(task =>
+      task.id === id
+        ? { ...task, completed: !task.completed }
+        : task
+    ));
+    toast({
+      title: "Task updated",
+      description: "Task completion status has been updated.",
+    });
   };
 
   return (
@@ -52,19 +62,20 @@ const Index = () => {
           </Button>
         </div>
 
-        {showForm ? (
+        {showForm && (
           <div className="mt-4">
             <TaskForm
               onSubmit={handleCreateTask}
               onCancel={() => setShowForm(false)}
             />
           </div>
-        ) : null}
+        )}
 
         <TaskList
           tasks={tasks}
           onDelete={handleDeleteTask}
           onEdit={handleEditTask}
+          onComplete={handleCompleteTask}
         />
       </div>
     </div>
