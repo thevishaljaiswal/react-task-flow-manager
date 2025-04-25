@@ -57,16 +57,75 @@ export const TaskList = ({ tasks, onDelete, onComplete }: Omit<TaskListProps, 'o
             task.completed && "bg-green-50 border-green-200"
           )}
         >
-          <CardHeader>
-            <div className="flex items-center justify-between">
-              <div>
-                <CardDescription className={cn(
+          <CardContent className="p-4">
+            <div className="flex items-center justify-between gap-4">
+              <div className="flex-1">
+                <p className={cn(
+                  "text-sm text-muted-foreground mb-2",
                   task.completed && "text-green-500"
                 )}>
                   {task.description}
-                </CardDescription>
+                </p>
+                <div className="flex items-center gap-2 flex-wrap">
+                  {task.customerName && (
+                    <div className="flex items-center gap-1 text-sm text-muted-foreground">
+                      <User className="h-3 w-3" />
+                      {task.customerName}
+                    </div>
+                  )}
+                  {task.projectName && (
+                    <div className="flex items-center gap-1 text-sm text-muted-foreground">
+                      <Briefcase className="h-3 w-3" />
+                      {task.projectName}
+                    </div>
+                  )}
+                  <Badge 
+                    variant="secondary" 
+                    className={cn(
+                      getPriorityColor(task.priority), 
+                      "text-white text-xs",
+                      task.completed && "opacity-50"
+                    )}
+                  >
+                    {task.priority.charAt(0).toUpperCase() + task.priority.slice(1)}
+                  </Badge>
+                  <Badge 
+                    variant="secondary" 
+                    className={cn(
+                      getStatusColor(task.status), 
+                      "text-white text-xs",
+                      task.completed && "opacity-50"
+                    )}
+                  >
+                    {task.completed ? "Completed" : (task.status.split('_').map(word => 
+                      word.charAt(0).toUpperCase() + word.slice(1)
+                    ).join(' '))}
+                  </Badge>
+                  {task.category && (
+                    <Badge 
+                      variant="outline"
+                      className={cn(
+                        "text-xs",
+                        task.completed && "opacity-50"
+                      )}
+                    >
+                      {task.category}
+                    </Badge>
+                  )}
+                  {task.dueDate && (
+                    <div 
+                      className={cn(
+                        "flex items-center text-xs text-muted-foreground",
+                        task.completed && "opacity-50"
+                      )}
+                    >
+                      <Calendar className="h-3 w-3 mr-1" />
+                      {format(task.dueDate, 'PP')}
+                    </div>
+                  )}
+                </div>
               </div>
-              <div className="flex items-center gap-2">
+              <div className="flex items-center gap-2 shrink-0">
                 <Button
                   variant="ghost"
                   size="icon"
@@ -88,75 +147,7 @@ export const TaskList = ({ tasks, onDelete, onComplete }: Omit<TaskListProps, 'o
                 </Button>
               </div>
             </div>
-          </CardHeader>
-          <CardContent>
-            <div className="flex items-center gap-4">
-              <Badge 
-                variant="secondary" 
-                className={cn(
-                  getPriorityColor(task.priority), 
-                  "text-white",
-                  task.completed && "opacity-50"
-                )}
-              >
-                {task.priority.charAt(0).toUpperCase() + task.priority.slice(1)}
-              </Badge>
-              <Badge 
-                variant="secondary" 
-                className={cn(
-                  getStatusColor(task.status), 
-                  "text-white",
-                  task.completed && "opacity-50"
-                )}
-              >
-                {task.completed ? "Completed" : (task.status.split('_').map(word => 
-                  word.charAt(0).toUpperCase() + word.slice(1)
-                ).join(' '))}
-              </Badge>
-              {task.category && (
-                <Badge 
-                  variant="outline"
-                  className={cn(
-                    task.completed && "opacity-50"
-                  )}
-                >
-                  {task.category}
-                </Badge>
-              )}
-              {task.dueDate && (
-                <div 
-                  className={cn(
-                    "flex items-center text-sm text-muted-foreground",
-                    task.completed && "opacity-50"
-                  )}
-                >
-                  <Calendar className="h-4 w-4 mr-1" />
-                  {format(task.dueDate, 'PP')}
-                </div>
-              )}
-            </div>
           </CardContent>
-          <CardFooter 
-            className={cn(
-              "text-sm text-muted-foreground",
-              task.completed && "opacity-50"
-            )}
-          >
-            <div className="flex items-center gap-4 flex-wrap">
-              {task.customerName && (
-                <div className="flex items-center gap-1">
-                  <User className="h-4 w-4" />
-                  {task.customerName}
-                </div>
-              )}
-              {task.projectName && (
-                <div className="flex items-center gap-1">
-                  <Briefcase className="h-4 w-4" />
-                  {task.projectName}
-                </div>
-              )}
-            </div>
-          </CardFooter>
         </Card>
       ))}
     </div>
