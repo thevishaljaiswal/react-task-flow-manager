@@ -1,4 +1,3 @@
-
 import { useState } from 'react';
 import { Calendar } from 'lucide-react';
 import { format } from "date-fns";
@@ -33,7 +32,7 @@ interface TaskFormProps {
   onCancel: () => void;
 }
 
-export const TaskForm = ({ onSubmit, onCancel }: TaskFormProps) => {
+const TaskForm = ({ onSubmit, onCancel }: TaskFormProps) => {
   const [title, setTitle] = useState('');
   const [description, setDescription] = useState('');
   const [dueDate, setDueDate] = useState<Date | null>(null);
@@ -42,7 +41,6 @@ export const TaskForm = ({ onSubmit, onCancel }: TaskFormProps) => {
   const [category, setCategory] = useState('');
   const [customerName, setCustomerName] = useState('');
   const [projectName, setProjectName] = useState('');
-  const [unitName, setUnitName] = useState('');
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
@@ -55,8 +53,7 @@ export const TaskForm = ({ onSubmit, onCancel }: TaskFormProps) => {
       category,
       customerName,
       projectName,
-      unitName,
-      completed: false, // New tasks are not completed by default
+      completed: false,
     });
   };
 
@@ -64,7 +61,7 @@ export const TaskForm = ({ onSubmit, onCancel }: TaskFormProps) => {
     <Card className="w-full max-w-lg">
       <form onSubmit={handleSubmit}>
         <CardHeader>
-          <CardTitle>Create New Task</CardTitle>
+          <CardTitle>Create New Activity</CardTitle>
         </CardHeader>
         <CardContent className="space-y-4">
           <div className="space-y-2">
@@ -148,8 +145,6 @@ export const TaskForm = ({ onSubmit, onCancel }: TaskFormProps) => {
               />
             </div>
           </div>
-          
-          {/* Additional fields */}
           <div className="flex gap-4">
             <div className="flex-1">
               <Input
@@ -167,22 +162,17 @@ export const TaskForm = ({ onSubmit, onCancel }: TaskFormProps) => {
                 onChange={(e) => setProjectName(e.target.value)}
               />
             </div>
-            <div className="flex-1">
-              <Input
-                placeholder="Unit Name"
-                value={unitName}
-                onChange={(e) => setUnitName(e.target.value)}
-              />
-            </div>
           </div>
         </CardContent>
         <CardFooter className="justify-between">
           <Button variant="ghost" onClick={onCancel}>
             Cancel
           </Button>
-          <Button type="submit">Create Task</Button>
+          <Button type="submit">Create Activity</Button>
         </CardFooter>
       </form>
     </Card>
   );
 };
+
+export default TaskForm;

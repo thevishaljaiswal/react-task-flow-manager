@@ -55,10 +55,10 @@ const Index = () => {
     <div className="min-h-screen p-8 bg-background">
       <div className="max-w-4xl mx-auto space-y-8">
         <div className="flex items-center justify-between">
-          <h1 className="text-4xl font-bold">Tasks</h1>
+          <h1 className="text-4xl font-bold">Activities</h1>
           <Button onClick={() => setShowForm(true)}>
             <Plus className="h-4 w-4 mr-2" />
-            New Task
+            New Activity
           </Button>
         </div>
 
@@ -74,7 +74,6 @@ const Index = () => {
         <TaskList
           tasks={tasks}
           onDelete={handleDeleteTask}
-          onEdit={handleEditTask}
           onComplete={handleCompleteTask}
         />
       </div>

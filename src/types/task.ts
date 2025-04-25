@@ -14,6 +14,5 @@ export interface Task {
   updatedAt: Date;
   customerName: string;
   projectName: string;
-  unitName: string;
   completed: boolean;
 }

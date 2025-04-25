@@ -1,4 +1,3 @@
-
 import { Task } from '../types/task';
 import {
   Card,
@@ -47,7 +46,7 @@ const getStatusColor = (status: Task['status']) => {
   }
 };
 
-export const TaskList = ({ tasks, onDelete, onEdit, onComplete }: TaskListProps) => {
+export const TaskList = ({ tasks, onDelete, onComplete }: Omit<TaskListProps, 'onEdit'>) => {
   return (
     <div className="space-y-4 w-full max-w-4xl">
       {tasks.map((task) => (
@@ -55,19 +54,19 @@ export const TaskList = ({ tasks, onDelete, onEdit, onComplete }: TaskListProps)
           key={task.id} 
           className={cn(
             "relative group hover:shadow-lg transition-shadow",
-            task.completed && "bg-green-50 border-green-200" // Changed to green background for completed tasks
+            task.completed && "bg-green-50 border-green-200"
           )}
         >
           <CardHeader>
             <div className="flex items-center justify-between">
               <div>
                 <CardTitle className={cn(
-                  task.completed && "text-green-600" // Changed text color for completed tasks
+                  task.completed && "text-green-600"
                 )}>
                   {task.title}
                 </CardTitle>
                 <CardDescription className={cn(
-                  task.completed && "text-green-500" // Adjusted description color
+                  task.completed && "text-green-500"
                 )}>
                   {task.description}
                 </CardDescription>
@@ -79,7 +78,7 @@ export const TaskList = ({ tasks, onDelete, onEdit, onComplete }: TaskListProps)
                   onClick={() => onComplete(task.id)}
                   className={cn(
                     "opacity-0 group-hover:opacity-100 transition-opacity",
-                    task.completed && "text-green-600" // Highlight complete button when task is completed
+                    task.completed && "text-green-600"
                   )}
                 >
                   <Check className="h-4 w-4" />
@@ -87,22 +86,8 @@ export const TaskList = ({ tasks, onDelete, onEdit, onComplete }: TaskListProps)
                 <Button
                   variant="ghost"
                   size="icon"
-                  onClick={() => onEdit(task)}
-                  className={cn(
-                    "opacity-0 group-hover:opacity-100 transition-opacity",
-                    task.completed && "opacity-50" // Reduce opacity of edit button for completed tasks
-                  )}
-                >
-                  <Edit className="h-4 w-4" />
-                </Button>
-                <Button
-                  variant="ghost"
-                  size="icon"
                   onClick={() => onDelete(task.id)}
-                  className={cn(
-                    "opacity-0 group-hover:opacity-100 transition-opacity text-destructive",
-                    task.completed && "opacity-50" // Reduce opacity of delete button for completed tasks
-                  )}
+                  className="opacity-0 group-hover:opacity-100 transition-opacity text-destructive"
                 >
                   <Trash2 className="h-4 w-4" />
                 </Button>
@@ -116,7 +101,7 @@ export const TaskList = ({ tasks, onDelete, onEdit, onComplete }: TaskListProps)
                 className={cn(
                   getPriorityColor(task.priority), 
                   "text-white",
-                  task.completed && "opacity-50" // Reduce badge opacity for completed tasks
+                  task.completed && "opacity-50"
                 )}
               >
                 {task.priority.charAt(0).toUpperCase() + task.priority.slice(1)}
@@ -126,7 +111,7 @@ export const TaskList = ({ tasks, onDelete, onEdit, onComplete }: TaskListProps)
                 className={cn(
                   getStatusColor(task.status), 
                   "text-white",
-                  task.completed && "opacity-50" // Reduce badge opacity for completed tasks
+                  task.completed && "opacity-50"
                 )}
               >
                 {task.completed ? "Completed" : (task.status.split('_').map(word => 
@@ -137,7 +122,7 @@ export const TaskList = ({ tasks, onDelete, onEdit, onComplete }: TaskListProps)
                 <Badge 
                   variant="outline"
                   className={cn(
-                    task.completed && "opacity-50" // Reduce badge opacity for completed tasks
+                    task.completed && "opacity-50"
                   )}
                 >
                   {task.category}
@@ -147,7 +132,7 @@ export const TaskList = ({ tasks, onDelete, onEdit, onComplete }: TaskListProps)
                 <div 
                   className={cn(
                     "flex items-center text-sm text-muted-foreground",
-                    task.completed && "opacity-50" // Reduce opacity for completed tasks
+                    task.completed && "opacity-50"
                   )}
                 >
                   <Calendar className="h-4 w-4 mr-1" />
@@ -159,7 +144,7 @@ export const TaskList = ({ tasks, onDelete, onEdit, onComplete }: TaskListProps)
           <CardFooter 
             className={cn(
               "text-sm text-muted-foreground",
-              task.completed && "opacity-50" // Reduce footer opacity for completed tasks
+              task.completed && "opacity-50"
             )}
           >
             <div className="flex items-center gap-4 flex-wrap">
@@ -173,12 +158,6 @@ export const TaskList = ({ tasks, onDelete, onEdit, onComplete }: TaskListProps)
                 <div className="flex items-center gap-1">
                   <Briefcase className="h-4 w-4" />
                   {task.projectName}
-                </div>
-              )}
-              {task.unitName && (
-                <div className="flex items-center gap-1">
-                  <Building className="h-4 w-4" />
-                  {task.unitName}
                 </div>
               )}
             </div>
