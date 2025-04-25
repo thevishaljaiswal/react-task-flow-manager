@@ -1,4 +1,3 @@
-
 import { useState } from 'react';
 import { Calendar } from 'lucide-react';
 import { format } from "date-fns";
@@ -34,7 +33,6 @@ interface ActivityFormProps {
 }
 
 export const ActivityForm = ({ onSubmit, onCancel }: ActivityFormProps) => {
-  const [title, setTitle] = useState('');
   const [description, setDescription] = useState('');
   const [dueDate, setDueDate] = useState<Date | null>(null);
   const [priority, setPriority] = useState<Priority>('medium');
@@ -46,7 +44,7 @@ export const ActivityForm = ({ onSubmit, onCancel }: ActivityFormProps) => {
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     onSubmit({
-      title,
+      title: description,
       description,
       dueDate,
       priority,
@@ -66,18 +64,11 @@ export const ActivityForm = ({ onSubmit, onCancel }: ActivityFormProps) => {
         </CardHeader>
         <CardContent className="space-y-4">
           <div className="space-y-2">
-            <Input
-              placeholder="Activity title"
-              value={title}
-              onChange={(e) => setTitle(e.target.value)}
-              required
-            />
-          </div>
-          <div className="space-y-2">
             <Textarea
               placeholder="Activity description"
               value={description}
               onChange={(e) => setDescription(e.target.value)}
+              required
             />
           </div>
           <div className="flex gap-4">

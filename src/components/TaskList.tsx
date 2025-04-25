@@ -60,11 +60,6 @@ export const TaskList = ({ tasks, onDelete, onComplete }: Omit<TaskListProps, 'o
           <CardHeader>
             <div className="flex items-center justify-between">
               <div>
-                <CardTitle className={cn(
-                  task.completed && "text-green-600"
-                )}>
-                  {task.title}
-                </CardTitle>
                 <CardDescription className={cn(
                   task.completed && "text-green-500"
                 )}>
