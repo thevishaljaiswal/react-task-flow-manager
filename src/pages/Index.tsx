@@ -1,6 +1,7 @@
+
 import { useState } from 'react';
 import { Task } from '../types/task';
-import { TaskForm } from '../components/TaskForm';
+import ActivityForm from '../components/TaskForm';
 import { TaskList } from '../components/TaskList';
 import { Button } from "@/components/ui/button";
 import { Plus } from 'lucide-react';
@@ -22,21 +23,17 @@ const Index = () => {
     setTasks([...tasks, newTask]);
     setShowForm(false);
     toast({
-      title: "Task created",
-      description: "Your new task has been created successfully.",
+      title: "Activity created",
+      description: "Your new activity has been created successfully.",
     });
   };
 
   const handleDeleteTask = (id: string) => {
     setTasks(tasks.filter(task => task.id !== id));
     toast({
-      title: "Task deleted",
-      description: "The task has been deleted successfully.",
+      title: "Activity deleted",
+      description: "The activity has been deleted successfully.",
     });
-  };
-
-  const handleEditTask = (task: Task) => {
-    console.log('Edit task:', task);
   };
 
   const handleCompleteTask = (id: string) => {
@@ -46,8 +43,8 @@ const Index = () => {
         : task
     ));
     toast({
-      title: "Task updated",
-      description: "Task completion status has been updated.",
+      title: "Activity updated",
+      description: "Activity completion status has been updated.",
     });
   };
 
@@ -64,7 +61,7 @@ const Index = () => {
 
         {showForm && (
           <div className="mt-4">
-            <TaskForm
+            <ActivityForm
               onSubmit={handleCreateTask}
               onCancel={() => setShowForm(false)}
             />

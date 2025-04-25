@@ -1,3 +1,4 @@
+
 import { useState } from 'react';
 import { Calendar } from 'lucide-react';
 import { format } from "date-fns";
@@ -27,12 +28,12 @@ import {
 import { Calendar as CalendarComponent } from "@/components/ui/calendar";
 import { cn } from '@/lib/utils';
 
-interface TaskFormProps {
-  onSubmit: (task: Omit<Task, 'id' | 'createdAt' | 'updatedAt'>) => void;
+interface ActivityFormProps {
+  onSubmit: (activity: Omit<Task, 'id' | 'createdAt' | 'updatedAt'>) => void;
   onCancel: () => void;
 }
 
-const TaskForm = ({ onSubmit, onCancel }: TaskFormProps) => {
+export const ActivityForm = ({ onSubmit, onCancel }: ActivityFormProps) => {
   const [title, setTitle] = useState('');
   const [description, setDescription] = useState('');
   const [dueDate, setDueDate] = useState<Date | null>(null);
@@ -66,7 +67,7 @@ const TaskForm = ({ onSubmit, onCancel }: TaskFormProps) => {
         <CardContent className="space-y-4">
           <div className="space-y-2">
             <Input
-              placeholder="Task title"
+              placeholder="Activity title"
               value={title}
               onChange={(e) => setTitle(e.target.value)}
               required
@@ -74,7 +75,7 @@ const TaskForm = ({ onSubmit, onCancel }: TaskFormProps) => {
           </div>
           <div className="space-y-2">
             <Textarea
-              placeholder="Task description"
+              placeholder="Activity description"
               value={description}
               onChange={(e) => setDescription(e.target.value)}
             />
@@ -175,4 +176,4 @@ const TaskForm = ({ onSubmit, onCancel }: TaskFormProps) => {
   );
 };
 
-export default TaskForm;
+export default ActivityForm;
